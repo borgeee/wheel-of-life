@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7 PRINCIPLES OF HEALTH QUIZ</title>
+
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+    
+<style>
+#chartdiv {
+width: 100%;
+height: 600px;
+}
+
+.areas {
+text-align: center;
+margin-bottom: 15px;
+min-height: 95px;
+}
+
+.areas .value {
+display: inline-block;
+font-size: 1.3em;
+padding: 5px 10px;
+border: 1px solid #ddd;
+cursor: pointer;
+}
+
+.areas .value:hover {
+background: #ecc;
+}
+</style>
+
+</head>
+<body>
+    <div id="chartdiv"></div>
+<script>
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+var chart = am4core.create("chartdiv", am4charts.RadarChart);
+chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+
+chart.data = [ {
+  "category": "AIR",
+  "value": 1,
+  "color": chart.colors.next()
+}, {
+  "category": "WATER",
+  "value": 2,
+  "color": chart.colors.next()
+}, {
+  "category": "SUNSHINE",
+  "value": 3,
+  "color": chart.colors.next()
+}, {
+  "category": "WHOLEFOODS",
+  "value": 4,
+  "color": chart.colors.next()
+}, {
+  "category": "EXERCISE",
+  "value": 5,
+  "color": chart.colors.next()
+}, {
+  "category": "PASSION",
+  "value": 6,
+  "color": chart.colors.next()
+}, {
+  "category": "RELATIONSHIPS",
+  "value": 7,
+  "color": chart.colors.next()
+}
+ ];
+
+chart.padding(20, 20, 20, 20);
+
+var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.dataFields.category = "category";
+categoryAxis.renderer.labels.template.location = 0.5;
+categoryAxis.renderer.tooltipLocation = 0.5;
+
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+valueAxis.renderer.labels.template.disabled = true;
+valueAxis.min = 0;
+valueAxis.max = 7;
+valueAxis.renderer.minGridDistance = 20;
+
+var series = chart.series.push(new am4charts.RadarColumnSeries());
+series.columns.template.tooltipText = "{categoryX}: {valueY.value}";
+series.columns.template.width = am4core.percent(100);
+series.columns.template.strokeWidth = 0;
+series.columns.template.column.propertyFields.fill = "color";
+series.dataFields.categoryX = "category";
+series.dataFields.valueY = "value";
+
+/**
+ * Sets value for particular index
+ */
+function setValue(index, value) {
+  
+  // Set value
+  chart.data[index].value = value;
+  chart.invalidateRawData();
+  
+  
+}
+</script>
+</body>
+</html>
